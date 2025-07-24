@@ -25,6 +25,7 @@ data "aws_iam_policy_document" "gitlab_runner" {
       "codedeploy:CreateDeployment",
       "codedeploy:GetApplication",
       "codedeploy:GetApplicationRevision",
+      "codedeploy:GetDeployment",
       "codedeploy:GetDeploymentConfig",
       "codedeploy:GetDeploymentGroup",
       "codedeploy:GetDeploymentInstance",
@@ -37,8 +38,10 @@ data "aws_iam_policy_document" "gitlab_runner" {
       "codedeploy:RegisterApplicationRevision"
     ]
     resources = [
-      "arn:aws-us-gov:codedeploy:${data.aws_caller_identity.current.account_id}:application:*",
-      "arn:aws-us-gov:codedeploy:${data.aws_caller_identity.current.account_id}:deploymentconfig:*"
+      "arn:aws-us-gov:codedeploy:*:190056725169:application:*",
+      "arn:aws-us-gov:codedeploy:*:190056725169:deploymentconfig:*",
+      "arn:aws-us-gov:codedeploy:*:190056725169:deploymentgroup:*/*",
+      "arn:aws-us-gov:codedeploy:*:190056725169:instance:*"
     ]
   }
 
@@ -58,18 +61,18 @@ data "aws_iam_policy_document" "gitlab_runner" {
   }
 
   statement {
-    sid = "backup"
+    sid = "awsbackup"
     actions = ["backup:*"]
     resources = [
-      "arn:aws-us-gov:backup:${data.aws_caller_identity.current.account_id}:framework-*",
-      "arn:aws-us-gov:backup:${data.aws_caller_identity.current.account_id}:report-plan-*-*",
-      "arn:aws-us-gov:backup:${data.aws_caller_identity.current.account_id}:backup-vault:*",
-      "arn:aws-us-gov:backup:${data.aws_caller_identity.current.account_id}:backup-plan:*",
-      "arn:aws-us-gov:backup:${data.aws_caller_identity.current.account_id}:legal-hold:*",
-      "arn:aws-us-gov:backup:${data.aws_caller_identity.current.account_id}:recovery-point:*"
+      "arn:aws-us-gov:backup:*:190056725169:framework:*-*",
+      "arn:aws-us-gov:backup:*:190056725169:report-plan:*-*",
+      "arn:aws-us-gov:backup:*:190056725169:backup-vault:*",
+      "arn:aws-us-gov:backup:*:190056725169:backup-plan:*",
+      "arn:aws-us-gov:backup:*:190056725169:legal-hold:*",
+      "arn:aws-us-gov:backup:*:190056725169:recovery-point:*"
     ]
   }
-
+#checked til here
   statement {
     sid = "autoscaling"
     actions = [
