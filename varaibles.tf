@@ -1,0 +1,3 @@
+variable "required_tags" {
+  
+}
